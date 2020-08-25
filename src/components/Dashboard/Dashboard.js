@@ -6,7 +6,12 @@ class Dashboard extends React.Component {
   render() {
     return <Box>
       <span>Dashboard Component</span>
-      <AccountCard />
+      <AccountCard
+        accountId='1'
+        accountName='Itau'
+        accountType='checking'
+        currency='R$'
+      />
     </Box>;
   }
 }
