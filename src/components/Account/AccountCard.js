@@ -19,6 +19,7 @@ import API from '../../Api';
 const styles = theme => ({
   root: {
     maxWidth: 280,
+    minWidth: 280
   },
 });
 
@@ -37,7 +38,7 @@ class AccountCard extends React.Component {
   }
 
   async componentDidMount() {
-    API.get('/accounts/{ this.accountId }/balance/total/')
+    API.get('/accounts/' + this.props.accountId + '/balance/total/')
       .then(response => {
         const accountData = response.data;
         this.setState({accountTotalBalance: accountData['total']});
@@ -46,38 +47,40 @@ class AccountCard extends React.Component {
 
   render() {
     const { classes } = this.props;
-    return <Card className={classes.root}>
-      <CardHeader
-        avatar={
-            iconsByAccountType[this.props.accountType]
-        }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title={
-          <Typography variant="h6" component="p">
-            { this.props.accountName }
-          </Typography>
-        }
-        subheader={
-          <Typography variant="caption" color="textSecondary">
-            { this.props.accountType }
-          </Typography>
-        }
-      />
-      <CardContent>
-        <Box display="flex" flexDirection="row" justifyContent="space-between">
-          <Typography variant="subtitle2" color="textSecondary">
-            Saldo atual
-          </Typography>
-          <Typography variant="subtitle2">
-             { this.props.currency } { this.state.accountTotalBalance }
-          </Typography>
-        </Box>
-      </CardContent>
-    </Card>
+    return <Box mx={1} order={this.props.accountId}>
+      <Card className={classes.root}>
+        <CardHeader
+          avatar={
+              iconsByAccountType[this.props.accountType]
+          }
+          action={
+            <IconButton aria-label="settings">
+              <MoreVertIcon />
+            </IconButton>
+          }
+          title={
+            <Typography variant="h6" component="p">
+              { this.props.accountName }
+            </Typography>
+          }
+          subheader={
+            <Typography variant="caption" color="textSecondary">
+              { this.props.accountType }
+            </Typography>
+          }
+        />
+        <CardContent>
+          <Box display="flex" flexDirection="row" justifyContent="space-between">
+            <Typography variant="subtitle2" color="textSecondary">
+              Saldo atual
+            </Typography>
+            <Typography variant="subtitle2">
+               { this.props.currency } { this.state.accountTotalBalance }
+            </Typography>
+          </Box>
+        </CardContent>
+      </Card>
+    </Box>
   }
 }
 
